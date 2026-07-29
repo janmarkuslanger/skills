@@ -9,5 +9,11 @@
     "description": "Personal collection of Claude Code skills, organized by category.",
     "version": "0.1.0"
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "engineering-toolkit",
+      "source": "engineering-toolkit",
+      "category": "engineering"
+    }
+  ]
 }

@@ -4,45 +4,60 @@ Personal collection of Claude Code skills, published as a plugin marketplace.
 
 ## Install
 
+Add the marketplace once:
+
 ```
 /plugin marketplace add janmarkuslanger/skills
 ```
 
-Then browse and install individual plugins via `/plugin`.
+Then either install a specific plugin:
+
+```
+/plugin install engineering-toolkit@skills
+```
+
+…or browse everything interactively with `/plugin`.
+
+## Skills by category
+
+### Engineering
+
+**`engineering-toolkit`** — practical, day-to-day engineering tooling.
+
+- **address-pr-comments** — Work through unresolved GitHub PR review comments: triage them by severity, agree a fix plan with the user, implement one commit per comment, push, and reply to each reviewer.
 
 ## Repository layout
+
+Plugins live at the repo root — one directory per plugin. Category is metadata
+in `marketplace.json`, not a directory level.
 
 ```
 .
 ├── .claude-plugin/
-│   └── marketplace.json      # marketplace manifest, lists all plugins
-├── engineering/              # engineering-category plugins
-│   └── <plugin-name>/
-│       ├── .claude-plugin/plugin.json
-│       └── skills/<skill-name>/SKILL.md
-├── web/                      # web-category plugins
-│   └── <plugin-name>/
-│       └── ...
+│   └── marketplace.json                    # marketplace manifest, lists all plugins
+├── engineering-toolkit/                    # a plugin
+│   ├── .claude-plugin/plugin.json
+│   └── skills/<skill-name>/SKILL.md
 ├── tools/
-│   └── validate_skills.py    # validator for marketplace + plugins + skills
+│   └── validate_skills.py                  # validator for marketplace + plugins + skills
 └── .github/workflows/
-    └── validate.yml          # CI: runs the validator on every push/PR
+    └── validate.yml                        # CI: runs the validator on every push/PR
 ```
 
 ## Adding a plugin
 
-1. Create a directory under the target category, e.g. `engineering/my-plugin/`.
-2. Add `engineering/my-plugin/.claude-plugin/plugin.json`:
+1. Create a plugin directory at the repo root, e.g. `web-toolkit/`.
+2. Add `web-toolkit/.claude-plugin/plugin.json`:
 
    ```json
    {
-     "name": "my-plugin",
+     "name": "web-toolkit",
      "version": "0.1.0",
      "description": "One-line summary of what this plugin does."
    }
    ```
 
-3. Add one or more skills under `engineering/my-plugin/skills/<skill-name>/SKILL.md`:
+3. Add one or more skills under `web-toolkit/skills/<skill-name>/SKILL.md`:
 
    ```markdown
    ---
@@ -60,13 +75,16 @@ Then browse and install individual plugins via `/plugin`.
 
    ```json
    {
-     "name": "my-plugin",
-     "source": "engineering/my-plugin",
-     "category": "engineering"
+     "name": "web-toolkit",
+     "source": "web-toolkit",
+     "category": "web"
    }
    ```
 
-5. Run the validator locally:
+5. Add an entry to the "Skills by category" section of this README under the
+   matching category (create the category heading if it's new).
+
+6. Run the validator locally:
 
    ```
    python3 tools/validate_skills.py

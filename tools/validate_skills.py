@@ -9,7 +9,6 @@ Checks:
 - Every SKILL.md inside a plugin has valid YAML frontmatter with required
   fields (name, description).
 - Skill names are kebab-case; descriptions do not exceed 1024 characters.
-- Plugins live under one of the allowed category directories.
 """
 
 from __future__ import annotations
@@ -24,7 +23,6 @@ import yaml
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MARKETPLACE_FILE = REPO_ROOT / ".claude-plugin" / "marketplace.json"
-CATEGORIES = ("engineering", "web")
 KEBAB_CASE = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
 MAX_DESCRIPTION_LEN = 1024
 REQUIRED_MARKETPLACE_FIELDS = ("name", "owner", "plugins")
@@ -151,25 +149,14 @@ def validate_marketplace(report: Report) -> dict | None:
             report.fail(
                 f"{MARKETPLACE_FILE}: plugin '{name}' source '{source}' is not a directory"
             )
-    return data
-
-
-def discover_plugins(report: Report) -> None:
-    for category in CATEGORIES:
-        category_dir = REPO_ROOT / category
-        if not category_dir.is_dir():
-            report.fail(f"{category_dir}: category directory is missing")
             continue
-        for entry in sorted(category_dir.iterdir()):
-            if entry.name.startswith(".") or not entry.is_dir():
-                continue
-            validate_plugin_dir(entry, report)
+        validate_plugin_dir(plugin_dir, report)
+    return data
 
 
 def main() -> int:
     report = Report()
     validate_marketplace(report)
-    discover_plugins(report)
 
     if report.ok():
         print("OK: marketplace, plugins, and skills validated.")
