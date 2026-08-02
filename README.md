@@ -25,6 +25,7 @@ Then either install a specific plugin:
 **`engineering-toolkit`** — practical, day-to-day engineering tooling.
 
 - **address-pr-comments** — Work through unresolved GitHub PR review comments: triage them by severity, agree a fix plan with the user, implement one commit per comment, push, and reply to each reviewer.
+- **resolve-github-issues** — Fetch a repo's open GitHub issues (optionally by label/milestone), plan and implement a fix for each in an isolated worktree, get an independent review per issue, then open one PR per issue after a single consolidated approval.
 
 ## Repository layout
 
