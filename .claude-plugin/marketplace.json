@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "engineering-toolkit",
-      "source": "engineering-toolkit",
+      "source": "./engineering-toolkit",
       "category": "engineering"
     }
   ]
